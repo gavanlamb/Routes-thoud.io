@@ -15,23 +15,19 @@ Outputs:
             Name: ThoudIoRoutes:ZoneId
 Resources:
     Zone:
-        DeletionPolicy: Retain
         Type: AWS::Route53::HostedZone
         Properties:
             Name: !Sub ${ZoneAddress}.
-    GoogleMx:
-        DeletionPolicy: Retain
-        Type: AWS::Route53::RecordSetGroup
+    GSuiteMx:
+        Type: AWS::Route53::RecordSet
         Properties:
-            HostedZoneId:
-                Ref: Zone
-            RecordSets:
-                -   Name: !Sub ${ZoneAddress}.
-                    Type: MX
-                    TTL: '300'
-                    ResourceRecords:
-                        - 1 ASPMX.L.GOOGLE.COM.
-                        - 5 ALT1.ASPMX.L.GOOGLE.COM.
-                        - 5 ALT2.ASPMX.L.GOOGLE.COM.
-                        - 10 ALT3.ASPMX.L.GOOGLE.COM.
-                        - 10 ALT4.ASPMX.L.GOOGLE.COM.
+            HostedZoneId: !Ref Zone
+            Name: !Sub ${ZoneAddress}.
+            Type: MX
+            TTL: '300'
+            ResourceRecords:
+                - 1 ASPMX.L.GOOGLE.COM.
+                - 5 ALT1.ASPMX.L.GOOGLE.COM.
+                - 5 ALT2.ASPMX.L.GOOGLE.COM.
+                - 10 ALT3.ASPMX.L.GOOGLE.COM.
+                - 10 ALT4.ASPMX.L.GOOGLE.COM.
