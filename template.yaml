@@ -1,0 +1,37 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Stack for thoud.io dns records that do not belong to child services
+Parameters:
+    ZoneAddress:
+        Type: String
+        Description: Name of the company
+        Default: thoud.io
+Outputs:
+    ZoneId:
+        Description: Id of the zone
+        Value:
+            Ref: Zone
+        Export:
+            Name: ThoudIORoutes:ZoneId
+Resources:
+    Zone:
+        DeletionPolicy: Retain
+        Type: AWS::Route53::HostedZone
+        Properties:
+            Name: !Sub ${ZoneAddress}.
+    GoogleMx:
+        DeletionPolicy: Retain
+        Type: AWS::Route53::RecordSetGroup
+        Properties:
+            HostedZoneId:
+                Ref: Zone
+            RecordSets:
+                -   Name: !Sub ${ZoneAddress}.
+                    Type: MX
+                    TTL: '300'
+                    ResourceRecords:
+                        - 1 ASPMX.L.GOOGLE.COM.
+                        - 5 ALT1.ASPMX.L.GOOGLE.COM.
+                        - 5 ALT2.ASPMX.L.GOOGLE.COM.
+                        - 10 ALT3.ASPMX.L.GOOGLE.COM.
+                        - 10 ALT4.ASPMX.L.GOOGLE.COM.
