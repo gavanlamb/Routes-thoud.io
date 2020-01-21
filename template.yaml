@@ -12,7 +12,7 @@ Outputs:
         Value:
             Ref: Zone
         Export:
-            Name: ThoudIORoutes:ZoneId
+            Name: ThoudIoRoutes:ZoneId
 Resources:
     Zone:
         DeletionPolicy: Retain
